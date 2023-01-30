@@ -1,10 +1,15 @@
 package queue;
-public class QueueCirArrayImpl {
+/*
+ * In this implementation
+ * rear is always (front+size-1)%cap
+ * 
+ */
+public class QueueCirArrayImpl2 {
 	int[] arr;
-	int cap,size,front,rear;
+	int cap,size,front;
 	
-	QueueCirArrayImpl(int c){
-		front=rear=-1;
+	QueueCirArrayImpl2(int c){
+		front=0;
 		cap = c;
 		size=0;
 		arr = new int[cap];
@@ -23,22 +28,18 @@ public class QueueCirArrayImpl {
 			System.out.println("Overflow Error");
 			return;
 		}
+		int rear = getRear();
 		rear=(rear+1)%cap;
 		arr[rear]=data;
-		if(front==-1)
-			front=0;
 		size++;
 	}
 	
 	void deque() {
 		if(isEmpty()) {
 			System.out.println("Underflow Error");
-		}
-		if(front==rear) {
-			front=rear=-1;
-			size=0;
 			return;
 		}
+		
 		front=(front+1)%cap;
 		size--;
 	}
@@ -47,14 +48,14 @@ public class QueueCirArrayImpl {
 		if(isEmpty()) {
 			return -1;
 		}
-		return arr[front];
+		return front;
 	}
 	
 	int getRear() {
 		if(isEmpty()) {
 			return -1;
 		}
-		return arr[rear];
+		return (front+size-1)%cap;
 	}
 
 	int size() {
@@ -68,6 +69,7 @@ public class QueueCirArrayImpl {
 			return;
 		}
 		System.out.println("Queue items are : ");
+		int rear = getRear();
 		if(rear>=front) {
 			for(int i=front;i<=rear;i++) {
 				System.out.println(arr[i]);
@@ -86,7 +88,7 @@ public class QueueCirArrayImpl {
 	}
 	
 	public static void main(String[] args) {
-		QueueCirArrayImpl queue = new QueueCirArrayImpl(10);
+		QueueCirArrayImpl2 queue = new QueueCirArrayImpl2(10);
 		queue.enque(10);
 		queue.enque(20);
 		queue.enque(30);

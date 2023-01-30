@@ -1,10 +1,15 @@
-package queue;
-public class QueueCirArrayImpl {
+package deque;
+/*
+ * In this Implementation rear is not maintained as it can be calculated as:
+ * (front+size-1)%cap
+ * */
+public class DequeCirArrayImpl3 {
 	int[] arr;
-	int cap,size,front,rear;
+	int cap,size,front;
 	
-	QueueCirArrayImpl(int c){
-		front=rear=-1;
+	
+	DequeCirArrayImpl3(int c){
+		front=0;
 		cap = c;
 		size=0;
 		arr = new int[cap];
@@ -18,28 +23,41 @@ public class QueueCirArrayImpl {
 		return size==0;
 	}
 	
-	void enque(int data){
+	void insertFront(int data){
 		if(isFull()) {
 			System.out.println("Overflow Error");
 			return;
 		}
-		rear=(rear+1)%cap;
-		arr[rear]=data;
-		if(front==-1)
-			front=0;
+		front=(front+cap-1)%cap;
+		arr[front]=data;
 		size++;
 	}
 	
-	void deque() {
+	void insertRear(int data){
+		if(isFull()) {
+			System.out.println("Overflow Error");
+			return;
+		}
+
+//		rear=(rear+1)%cap;
+		int newRear= (front+size)%cap;
+		arr[newRear]=data;
+		size++;
+	}
+	
+	void deleteFront() {
 		if(isEmpty()) {
 			System.out.println("Underflow Error");
-		}
-		if(front==rear) {
-			front=rear=-1;
-			size=0;
 			return;
 		}
 		front=(front+1)%cap;
+		size--;
+	}
+	
+	void deleteRear() {
+		if(isEmpty()) {
+			System.out.println("Underflow Error");
+		}
 		size--;
 	}
 	
@@ -47,14 +65,15 @@ public class QueueCirArrayImpl {
 		if(isEmpty()) {
 			return -1;
 		}
-		return arr[front];
+		return front;
 	}
 	
 	int getRear() {
 		if(isEmpty()) {
 			return -1;
 		}
-		return arr[rear];
+		
+		return (front+size-1)%cap;
 	}
 
 	int size() {
@@ -68,6 +87,7 @@ public class QueueCirArrayImpl {
 			return;
 		}
 		System.out.println("Queue items are : ");
+		int rear=getRear();
 		if(rear>=front) {
 			for(int i=front;i<=rear;i++) {
 				System.out.println(arr[i]);
@@ -86,12 +106,12 @@ public class QueueCirArrayImpl {
 	}
 	
 	public static void main(String[] args) {
-		QueueCirArrayImpl queue = new QueueCirArrayImpl(10);
-		queue.enque(10);
-		queue.enque(20);
-		queue.enque(30);
+		DequeCirArrayImpl3 queue = new DequeCirArrayImpl3(10);
+		queue.insertFront(10);
+		queue.insertFront(20);
+		queue.insertFront(30);
 	    queue.display();
-		queue.deque();
+		queue.deleteRear();
 		queue.display();
 		System.out.println("Item at the front is : "+queue.getFront());
 		System.out.println("Item at the rear is : "+queue.getRear());

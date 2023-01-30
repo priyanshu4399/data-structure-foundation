@@ -1,9 +1,12 @@
-package queue;
-public class QueueCirArrayImpl {
+package deque;
+/* In this implementation also we maintain seperate front and rear
+ * But insertFront & deleteRear is Line of Code is reduced
+ * */
+public class DequeCirArrayImpl2 {
 	int[] arr;
 	int cap,size,front,rear;
 	
-	QueueCirArrayImpl(int c){
+	DequeCirArrayImpl2(int c){
 		front=rear=-1;
 		cap = c;
 		size=0;
@@ -18,7 +21,23 @@ public class QueueCirArrayImpl {
 		return size==0;
 	}
 	
-	void enque(int data){
+	void insertFront(int data){
+		if(isFull()) {
+			System.out.println("Overflow Error");
+			return;
+		}
+		if(isEmpty()) {
+			front=rear=0;
+			arr[front]=data;
+			size++;
+			return;
+		}
+		front=(front+cap-1)%cap;
+		arr[front]=data;
+		size++;
+	}
+	
+	void insertRear(int data){
 		if(isFull()) {
 			System.out.println("Overflow Error");
 			return;
@@ -30,16 +49,30 @@ public class QueueCirArrayImpl {
 		size++;
 	}
 	
-	void deque() {
+	void deleteFront() {
 		if(isEmpty()) {
 			System.out.println("Underflow Error");
 		}
 		if(front==rear) {
 			front=rear=-1;
-			size=0;
+			size--;
 			return;
 		}
 		front=(front+1)%cap;
+		size--;
+	}
+	
+	void deleteRear() {
+		if(isEmpty()) {
+			System.out.println("Underflow Error");
+		}
+		
+		if(front==rear) {
+			front=rear=-1;
+			size=0;
+			return;
+		}
+		rear=(rear-1+cap)%cap;
 		size--;
 	}
 	
@@ -47,14 +80,14 @@ public class QueueCirArrayImpl {
 		if(isEmpty()) {
 			return -1;
 		}
-		return arr[front];
+		return front;
 	}
 	
 	int getRear() {
 		if(isEmpty()) {
 			return -1;
 		}
-		return arr[rear];
+		return rear;
 	}
 
 	int size() {
@@ -86,12 +119,12 @@ public class QueueCirArrayImpl {
 	}
 	
 	public static void main(String[] args) {
-		QueueCirArrayImpl queue = new QueueCirArrayImpl(10);
-		queue.enque(10);
-		queue.enque(20);
-		queue.enque(30);
+		DequeCirArrayImpl2 queue = new DequeCirArrayImpl2(10);
+		queue.insertFront(10);
+		queue.insertFront(20);
+		queue.insertFront(30);
 	    queue.display();
-		queue.deque();
+		queue.deleteRear();
 		queue.display();
 		System.out.println("Item at the front is : "+queue.getFront());
 		System.out.println("Item at the rear is : "+queue.getRear());
