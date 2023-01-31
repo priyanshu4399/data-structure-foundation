@@ -1,24 +1,23 @@
 package deque;
-/* In this implementation also we maintain seperate front and rear
- * But insertFront & deleteRear is Line of Code is reduced
+/* In this implementation size var is not maintained as it can be calculated from front & rear. 
+ * Also Line of Code is reduced.
  * */
 public class DequeCirArrayImpl2 {
 	int[] arr;
-	int cap,size,front,rear;
+	int cap,front,rear;
 	
 	DequeCirArrayImpl2(int c){
 		front=rear=-1;
 		cap = c;
-		size=0;
 		arr = new int[cap];
 	}
 	
 	boolean isFull() {
-		return size==cap;
+		return size()==cap;
 	}
 	
 	boolean isEmpty() {
-		return size==0;
+		return size()==0;
 	}
 	
 	void insertFront(int data){
@@ -26,15 +25,11 @@ public class DequeCirArrayImpl2 {
 			System.out.println("Overflow Error");
 			return;
 		}
-		if(isEmpty()) {
+		if(isEmpty()) 
 			front=rear=0;
-			arr[front]=data;
-			size++;
-			return;
-		}
-		front=(front+cap-1)%cap;
+		else
+			front=(front+cap-1)%cap;
 		arr[front]=data;
-		size++;
 	}
 	
 	void insertRear(int data){
@@ -42,58 +37,52 @@ public class DequeCirArrayImpl2 {
 			System.out.println("Overflow Error");
 			return;
 		}
+		if(isEmpty())
+			front=0;
 		rear=(rear+1)%cap;
 		arr[rear]=data;
-		if(front==-1)
-			front=0;
-		size++;
 	}
 	
 	void deleteFront() {
 		if(isEmpty()) {
 			System.out.println("Underflow Error");
-		}
-		if(front==rear) {
-			front=rear=-1;
-			size--;
 			return;
 		}
-		front=(front+1)%cap;
-		size--;
+		if(front==rear) 
+			front=rear=-1;
+		else
+			front=(front+1)%cap;
+
 	}
 	
 	void deleteRear() {
 		if(isEmpty()) {
 			System.out.println("Underflow Error");
-		}
-		
-		if(front==rear) {
-			front=rear=-1;
-			size=0;
 			return;
 		}
-		rear=(rear-1+cap)%cap;
-		size--;
+		if(front==rear) 
+			front=rear=-1;
+		else
+			rear=(rear-1+cap)%cap;
 	}
 	
 	int getFront() {
 		if(isEmpty()) {
 			return -1;
 		}
-		return front;
+		return arr[front];
 	}
 	
 	int getRear() {
 		if(isEmpty()) {
 			return -1;
 		}
-		return rear;
+		return arr[rear];
 	}
 
 	int size() {
-		return size;
+		return (rear-front+1+cap)%cap;
 	}
-	
 	
 	void display() {
 		if(isEmpty()) {
@@ -114,24 +103,23 @@ public class DequeCirArrayImpl2 {
 				System.out.println(arr[i]);
 			}
 		}
-		
-		
 	}
 	
 	public static void main(String[] args) {
-		DequeCirArrayImpl2 queue = new DequeCirArrayImpl2(10);
-		queue.insertFront(10);
-		queue.insertFront(20);
-		queue.insertFront(30);
-	    queue.display();
-		queue.deleteRear();
-		queue.display();
-		System.out.println("Item at the front is : "+queue.getFront());
-		System.out.println("Item at the rear is : "+queue.getRear());
-		System.out.println("Size : " +queue.size());
-		System.out.println("Is Queue Full : "+ queue.isFull());
-		System.out.println("Is Queue Empty : "+ queue.isEmpty());
-		queue.display();
+		DequeCirArrayImpl2 deque = new DequeCirArrayImpl2(3);
+		deque.insertRear(20);
+		deque.insertRear(30);
+		deque.insertFront(10);
+		deque.display();
+		System.out.println("Is Queue Full : "+ deque.isFull());
+		deque.deleteFront();
+		deque.display();
+		System.out.println("Item at the front is : "+deque.getFront());
+		System.out.println("Item at the rear is : "+deque.getRear());
+		System.out.println("Size : " +deque.size());
+		deque.deleteRear();
+		deque.deleteRear();
+		System.out.println("Is Queue Empty : "+ deque.isEmpty());
 	}
 	
 }

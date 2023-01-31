@@ -1,12 +1,11 @@
 package deque;
 /*
  * In this Implementation rear is not maintained as it can be calculated as:
- * (front+size-1)%cap
+ * rear = (front+size-1)%cap
  * */
 public class DequeCirArrayImpl3 {
 	int[] arr;
 	int cap,size,front;
-	
 	
 	DequeCirArrayImpl3(int c){
 		front=0;
@@ -38,8 +37,7 @@ public class DequeCirArrayImpl3 {
 			System.out.println("Overflow Error");
 			return;
 		}
-
-//		rear=(rear+1)%cap;
+		//rear=(rear+1)%cap;
 		int newRear= (front+size)%cap;
 		arr[newRear]=data;
 		size++;
@@ -65,14 +63,20 @@ public class DequeCirArrayImpl3 {
 		if(isEmpty()) {
 			return -1;
 		}
-		return front;
+		return arr[front];
 	}
 	
 	int getRear() {
 		if(isEmpty()) {
 			return -1;
 		}
-		
+		return arr[(front+size-1)%cap];
+	}
+	
+	int rear() {
+		if(isEmpty()) {
+			return -1;
+		}
 		return (front+size-1)%cap;
 	}
 
@@ -80,14 +84,13 @@ public class DequeCirArrayImpl3 {
 		return size;
 	}
 	
-	
 	void display() {
 		if(isEmpty()) {
 			System.out.println("Queue is Empty");
 			return;
 		}
 		System.out.println("Queue items are : ");
-		int rear=getRear();
+		int rear=rear();
 		if(rear>=front) {
 			for(int i=front;i<=rear;i++) {
 				System.out.println(arr[i]);
@@ -106,19 +109,20 @@ public class DequeCirArrayImpl3 {
 	}
 	
 	public static void main(String[] args) {
-		DequeCirArrayImpl3 queue = new DequeCirArrayImpl3(10);
-		queue.insertFront(10);
-		queue.insertFront(20);
-		queue.insertFront(30);
-	    queue.display();
-		queue.deleteRear();
-		queue.display();
-		System.out.println("Item at the front is : "+queue.getFront());
-		System.out.println("Item at the rear is : "+queue.getRear());
-		System.out.println("Size : " +queue.size());
-		System.out.println("Is Queue Full : "+ queue.isFull());
-		System.out.println("Is Queue Empty : "+ queue.isEmpty());
-		queue.display();
+		DequeCirArrayImpl3 deque = new DequeCirArrayImpl3(3);
+		deque.insertRear(20);
+		deque.insertRear(30);
+		deque.insertFront(10);
+		deque.display();
+		System.out.println("Is Queue Full : "+ deque.isFull());
+		deque.deleteFront();
+		deque.display();
+		System.out.println("Item at the front is : "+deque.getFront());
+		System.out.println("Item at the rear is : "+deque.getRear());
+		System.out.println("Size : " +deque.size());
+		deque.deleteRear();
+		deque.deleteRear();
+		System.out.println("Is Queue Empty : "+ deque.isEmpty());
 	}
 	
 }
