@@ -8,7 +8,7 @@ class Node{
 		data=d;
 	}
 }
-public class DequeBuildInImpl {
+public class DequeLinkedListImpl {
 	Node front,rear;
 	int size;
 	
@@ -92,7 +92,7 @@ public class DequeBuildInImpl {
 	}
 	
 	public static void main(String[] args) {
-		DequeBuildInImpl deque = new DequeBuildInImpl();
+		DequeLinkedListImpl deque = new DequeLinkedListImpl();
 		deque.insertRear(20);
 		deque.insertRear(30);
 		deque.insertFront(10);

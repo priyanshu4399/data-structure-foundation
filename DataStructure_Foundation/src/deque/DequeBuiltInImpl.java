@@ -3,10 +3,13 @@ package deque;
 import java.util.Deque;
 import java.util.LinkedList;
 
-public class DequeBuiltInLinkedListimpl {
+public class DequeBuiltInImpl {
+	
 	public static void main(String[] args) {
+		
 		//We could also use ArrayDeque instead of LinkedList as it also implements Deque Interface
 		//Deque<Integer> deque = new ArrayDeque<>();
+		
 		Deque<Integer> deque = new LinkedList<>();
 		deque.offerLast(20);
 		deque.offerLast(30);
