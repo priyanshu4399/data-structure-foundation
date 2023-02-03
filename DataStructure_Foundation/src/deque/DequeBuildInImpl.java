@@ -1,7 +1,5 @@
 package deque;
 
-import linkedList.DoublyLinkedList;
-
 class Node{
 	int data;
 	Node prev;
@@ -10,7 +8,7 @@ class Node{
 		data=d;
 	}
 }
-public class DequeDoublyLinkedListImpl {
+public class DequeBuildInImpl {
 	Node front,rear;
 	int size;
 	
@@ -94,7 +92,7 @@ public class DequeDoublyLinkedListImpl {
 	}
 	
 	public static void main(String[] args) {
-		DequeDoublyLinkedListImpl deque = new DequeDoublyLinkedListImpl();
+		DequeBuildInImpl deque = new DequeBuildInImpl();
 		deque.insertRear(20);
 		deque.insertRear(30);
 		deque.insertFront(10);

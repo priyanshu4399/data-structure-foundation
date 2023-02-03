@@ -1,6 +1,5 @@
 package linkedList;
 
-import linkedList.SinglyLinkedList.Node;
 
 public class SinglyLinkedList {
 	
